@@ -74,11 +74,76 @@
   </main>
 
   <script>
-    document.getElementById("adminLogin").addEventListener("submit", function(event) {
-      event.preventDefault();
-      document.getElementById("message").textContent =
-        "Supabase authentication has not been connected yet.";
-    });
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./config.js"></script>
+<script>
+(() => {
+  const form = document.getElementById("adminLogin");
+  const message = document.getElementById("message");
+  const button = form.querySelector("button[type='submit']");
+
+  let db;
+
+  try {
+    const config = window.CLUB_CONFIG;
+
+    if (!config || !config.url || !config.publishableKey) {
+      message.textContent =
+        "Configuration missing. Please check config.js.";
+      button.disabled = true;
+      return;
+    }
+
+    if (!window.supabase) {
+      message.textContent =
+        "Supabase library failed to load. Check your internet connection.";
+      button.disabled = true;
+      return;
+    }
+
+    db = window.supabase.createClient(
+      config.url,
+      config.publishableKey
+    );
+
+    message.textContent = "Ready to connect securely.";
+  } catch (error) {
+    message.textContent = "Could not initialize Supabase.";
+    button.disabled = true;
+    return;
+  }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    button.disabled = true;
+    message.textContent = "Signing in...";
+
+    try {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await db.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        message.textContent = "Sign-in failed: " + error.message;
+        return;
+      }
+
+      message.textContent =
+        "Login successful. Administrator permissions still need to be verified before the dashboard can be accessed.";
+    } catch (error) {
+      message.textContent =
+        "Connection error. Please check your internet and try again.";
+    } finally {
+      button.disabled = false;
+    }
+  });
+})();
+</script>
+
   </script>
 </body>
 </html>
