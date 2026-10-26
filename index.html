@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b5d">
+  <title>Unique Elite Club</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Unique Elite Club home">
+      <span class="brand-mark">UE</span>
+      <span><strong>Unique Elite Club</strong><small>Unity · Progress · Excellence</small></span>
+    </a>
+    <button id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav id="main-nav">
+      <a href="#about">About</a><a href="#rules">Club Rules</a><a href="#announcements">Announcements</a>
+      <a href="#member-area">Member Portal</a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">WELCOME TO OUR COMMUNITY</p>
+        <h1>Growing together.<br><span>Building the future.</span></h1>
+        <p>A community committed to friendship, accountability, financial discipline and collective progress.</p>
+        <div class="hero-actions"><a class="button button-light" href="#member-area">Member Portal</a><a class="button button-outline" href="#about">Learn about us</a></div>
+      </div>
+      <div class="hero-panel"><span class="panel-icon">✦</span><p>UNITY</p><h2>Stronger together</h2><small>Respect · Responsibility · Progress</small></div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-heading"><p class="eyebrow">WHO WE ARE</p><h2>About Unique Elite Club</h2><p>A club built on mutual support, responsible participation and long-term thinking.</p></div>
+      <div class="three-cards">
+        <article class="info-card"><span class="card-symbol">◎</span><h3>Unity</h3><p>We value friendship, respect and constructive cooperation among members.</p></article>
+        <article class="info-card"><span class="card-symbol">↗</span><h3>Progress</h3><p>We encourage accountability, consistency and thoughtful preparation for the future.</p></article>
+        <article class="info-card"><span class="card-symbol">◇</span><h3>Excellence</h3><p>We aim to manage club activities and records with fairness and transparency.</p></article>
+      </div>
+    </section>
+
+    <section id="rules" class="section section-tint">
+      <div class="section-heading"><p class="eyebrow">OUR COMMITMENT</p><h2>Club rules</h2><p>Members should follow the club's approved constitution and decisions.</p></div>
+      <div class="rules-card">
+        <ul>
+          <li>Physical club meetings are held on Sundays, according to the club schedule.</li>
+          <li>New members must attend physically before being formally recognized.</li>
+          <li>Three consecutive missed meetings may result in temporary WhatsApp suspension under club rules.</li>
+          <li>Members should follow agreed payment schedules and applicable late-payment rules.</li>
+          <li>Regular savings and optional investment activities are recorded separately.</li>
+        </ul>
+        <p class="note">These are a website summary. The club's formally approved rules take precedence.</p>
+      </div>
+    </section>
+
+    <section id="announcements" class="section">
+      <div class="section-heading"><p class="eyebrow">STAY INFORMED</p><h2>Club announcements</h2><p>Important notices from authorized club officers.</p></div>
+      <div id="public-announcements" class="announcement-list"><p class="empty-state">Announcements will appear here when the database is connected.</p></div>
+    </section>
+
+    <section id="member-area" class="section section-tint">
+      <div class="section-heading"><p class="eyebrow">MEMBER ACCESS</p><h2>Member portal</h2><p>Sign in to view club records. New registrations require officer approval.</p></div>
+      <div class="portal-grid">
+        <article class="portal-card" id="auth-card">
+          <div class="tab-row"><button class="tab active" id="show-login" type="button">Sign in</button><button class="tab" id="show-register" type="button">Register</button></div>
+          <form id="login-form">
+            <label>Email address<input id="login-email" type="email" autocomplete="email" required></label>
+            <label>Password<input id="login-password" type="password" autocomplete="current-password" required minlength="8"></label>
+            <button class="button button-primary full" type="submit">Sign in</button>
+          </form>
+          <form id="register-form" hidden>
+            <label>Full name<input id="register-name" type="text" autocomplete="name" required maxlength="120"></label>
+            <label>Email address<input id="register-email" type="email" autocomplete="email" required></label>
+            <label>Phone number (optional)<input id="register-phone" type="tel" autocomplete="tel" maxlength="30"></label>
+            <label>Create password<input id="register-password" type="password" autocomplete="new-password" required minlength="8"></label>
+            <button class="button button-primary full" type="submit">Submit registration</button>
+            <p class="note">Use a unique password. Your account remains pending until approved by a club officer.</p>
+          </form>
+          <p id="auth-message" class="message" role="status" aria-live="polite"></p>
+        </article>
+
+        <article class="portal-card portal-intro">
+          <span class="card-symbol">▣</span><h3>Member services</h3>
+          <ul><li>Weekly dues and payment history</li><li>Attendance and penalties</li><li>Savings and optional investments</li><li>Club announcements and photos</li></ul>
+          <p class="note">Sign in to access member records. Financial information is not shown on the public homepage.</p>
+        </article>
+      </div>
+
+      <section id="dashboard" class="dashboard" hidden>
+        <div class="dashboard-top"><div><p class="eyebrow">SECURE MEMBER AREA</p><h2 id="welcome-title">Welcome</h2><p id="member-status" class="note"></p></div><button id="sign-out" class="button button-secondary" type="button">Sign out</button></div>
+        <div id="pending-notice" class="notice" hidden>Your registration is awaiting approval. Member records will be available after an officer approves your account.</div>
+        <div id="member-content" hidden>
+          <div class="dashboard-tabs">
+            <button class="dash-tab active" data-panel="payments-panel" type="button">Weekly payments</button>
+            <button class="dash-tab" data-panel="attendance-panel" type="button">Attendance</button>
+            <button class="dash-tab" data-panel="savings-panel" type="button">Savings & investments</button>
+            <button class="dash-tab" data-panel="announcements-panel" type="button">Announcements & photos</button>
+            <button class="dash-tab admin-only" data-panel="admin-panel" type="button" hidden>Officer dashboard</button>
+          </div>
+
+          <div id="payments-panel" class="dash-panel">
+            <div class="panel-heading"><div><h3>Weekly payment list</h3><p>Visible to approved registered members.</p></div></div>
+            <div class="table-wrap"><table><thead><tr><th>Week / date</th><th>Member</th><th>Amount due</th><th>Amount paid</th><th>Balance</th><th>Status</th></tr></thead><tbody id="payments-table"><tr><td colspan="6">Loading records…</td></tr></tbody></table></div>
+            <p class="note">Records shown here depend on the club's approved privacy policy and database permissions.</p>
+          </div>
+          <div id="attendance-panel" class="dash-panel" hidden><h3>Meeting attendance</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Member</th><th>Attendance</th><th>Penalty</th></tr></thead><tbody id="attendance-table"><tr><td colspan="4">Loading records…</td></tr></tbody></table></div></div>
+          <div id="savings-panel" class="dash-panel" hidden><h3>Savings & optional investments</h3><p class="note">Regular savings and optional investment records are kept separately.</p><div class="table-wrap"><table><thead><tr><th>Date</th><th>Member</th><th>Record type</th><th>Amount</th><th>Note</th></tr></thead><tbody id="savings-table"><tr><td colspan="5">Loading records…</td></tr></tbody></table></div></div>
+          <div id="announcements-panel" class="dash-panel" hidden><h3>Member announcements & photos</h3><div id="member-announcements" class="announcement-list"></div><div id="photo-gallery" class="photo-gallery"></div></div>
+
+          <div id="admin-panel" class="dash-panel" hidden>
+            <h3>Officer dashboard</h3><p class="note">Only accounts granted an officer role in the database can use these forms.</p>
+            <div class="admin-grid">
+              <form id="payment-form" class="form-card">
+                <h4>Add weekly payment record</h4>
+                <label>Member<select id="payment-member" required><option value="">Load approved members first</option></select></label>
+                <label>Week starting<input id="payment-week" type="date" required></label>
+                <label>Amount due (NGN)<input id="payment-due" type="number" min="0" step="0.01" required></label>
+                <label>Amount paid (NGN)<input id="payment-paid" type="number" min="0" step="0.01" value="0" required></label>
+                <label>Payment note (optional)<input id="payment-note" type="text" maxlength="250"></label>
+                <button class="button button-primary" type="submit">Save payment record</button>
+              </form>
+              <form id="announcement-form" class="form-card">
+                <h4>Post an announcement</h4>
+                <label>Title<input id="announcement-title" required maxlength="160"></label>
+                <label>Message<textarea id="announcement-body" rows="4" required maxlength="5000"></textarea></label>
+                <label>Photo (optional)<input id="announcement-image" type="file" accept="image/*"></label>
+                <button class="button button-primary" type="submit">Publish announcement</button>
+              </form>
+              <form id="attendance-form" class="form-card">
+                <h4>Record attendance</h4>
+                <label>Member<select id="attendance-member" required><option value="">Load approved members first</option></select></label>
+                <label>Meeting date<input id="attendance-date" type="date" required></label>
+                <label>Status<select id="attendance-status"><option>Present</option><option>Absent</option><option>Excused</option></select></label>
+                <label>Penalty (NGN)<input id="attendance-penalty" type="number" min="0" step="0.01" value="0" required></label>
+                <button class="button button-primary" type="submit">Save attendance</button>
+              </form>
+              <form id="savings-form" class="form-card">
+                <h4>Record savings / investment</h4>
+                <label>Member<select id="savings-member" required><option value="">Load approved members first</option></select></label>
+                <label>Date<input id="savings-date" type="date" required></label>
+                <label>Type<select id="savings-type"><option>Regular savings</option><option>Optional investment</option></select></label>
+                <label>Amount (NGN)<input id="savings-amount" type="number" min="0" step="0.01" required></label>
+                <label>Note (optional)<input id="savings-note" maxlength="250"></label>
+                <button class="button button-primary" type="submit">Save financial record</button>
+              </form>
+              <form id="approval-form" class="form-card">
+                <h4>Approve a member</h4>
+                <label>Pending member<select id="pending-member" required><option value="">Load pending members first</option></select></label>
+                <button class="button button-primary" type="submit">Approve member</button>
+                <p class="note">Only administrators should approve members or assign roles.</p>
+              </form>
+            </div>
+            <p id="admin-message" class="message" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="section-heading"><p class="eyebrow">GET IN TOUCH</p><h2>Contact the club</h2></div>
+      <div class="contact-card"><p><strong>Email</strong><a href="mailto:UniqueEliteClub26@gmail.com">UniqueEliteClub26@gmail.com</a></p><p><strong>Phone</strong><a href="tel:+2347064954673">+234 706 495 4673</a></p><p><strong>Location</strong><span>Falade Street, Shomolu/Bariga, Lagos</span></p></div>
+    </section>
+  </main>
+  <footer><strong>Unique Elite Club</strong><p>Unity · Progress · Excellence</p><small>© <span id="year"></span> Unique Elite Club. Club records are accessible only under the club's access policy.</small></footer>
+</body>
+</html>
