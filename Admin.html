@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unique Elite Club | Admin Login</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f1f5f2;
+      color: #173b2b;
+    }
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px #00000012;
+    }
+    h1 { font-size: 24px; margin-top: 0; }
+    p { line-height: 1.5; color: #53665b; }
+    label { display: block; margin: 18px 0 7px; font-weight: bold; }
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccd7cf;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: 0;
+      border-radius: 8px;
+      background: #176b45;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    #message { overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Unique Elite Club</h1>
+    <p>Administrator sign-in</p>
+
+    <form id="adminLogin">
+      <label for="email">Admin email</label>
+      <input id="email" type="email"
+        autocomplete="username"
+        placeholder="Enter admin email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        autocomplete="current-password"
+        placeholder="Enter password" required>
+
+      <button type="submit">Sign In</button>
+    </form>
+
+    <p id="message" role="status">
+      Secure administrator access.
+    </p>
+  </main>
+
+  <script>
+    document.getElementById("adminLogin").addEventListener("submit", function(event) {
+      event.preventDefault();
+      document.getElementById("message").textContent =
+        "Supabase authentication has not been connected yet.";
+    });
+  </script>
+</body>
+</html>
