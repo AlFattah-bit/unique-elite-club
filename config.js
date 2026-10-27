@@ -5,6 +5,6 @@
 */
 window.CLUB_CONFIG = {
   url: "'https://pfduotjxpxspfiafiqjz.supabase.co'",
-  publishablekey: "sb_publishable_-Msvw5-qQuC7lq5eLLyEIA_0HMbSQZh",
+  publishableKey: "sb_publishable_-Msvw5-qQuC7lq5eLLyEIA_0HMbSQZh",
   STORAGE_BUCKET: "club-photos"
 };
