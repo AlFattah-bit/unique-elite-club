@@ -8,3 +8,4 @@ window.CLUB_CONFIG = {
   publishableKey: "sb_publishable_-Msvw5-qQuC7lq5eLLyEIA_0HMbSQZh",
   STORAGE_BUCKET: "club-photos"
 };
+
